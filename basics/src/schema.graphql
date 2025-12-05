@@ -13,6 +13,10 @@ type Mutation {
   deleteUser(id: ID!): User!
 }
 
+type Subscription {
+  count: Int!
+}
+
 type User {
   id: ID!
   name: String!
