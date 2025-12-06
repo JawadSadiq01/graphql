@@ -10,6 +10,12 @@ const Subscription = {
 
       return pubsub.subscribe('count')
     }
+  },
+
+  comment: {
+    subscribe: (parent, { postId }, { db, pubsub }, info) => {
+      return pubsub.subscribe('New Comment')
+    }
   }
 }
 

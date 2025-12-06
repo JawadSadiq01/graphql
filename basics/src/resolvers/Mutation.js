@@ -66,7 +66,7 @@ const Mutation = {
     return newPost
   },
 
-  createComment: (parent, args, { db }, info) => {
+  createComment: (parent, args, { db, pubsub }, info) => {
     const { data } = args
     const userFound = db.users.some(user => user.id === data.author)
     if (!userFound) {
@@ -78,13 +78,15 @@ const Mutation = {
       throw new GraphQLError('Post not found.')
     }
 
-    const newComment = {
+    const comment = {
       id: uuidv4(),
       ...data
     }
 
-    db.comments.push(newComment)
-    return newComment
+    db.comments.push(comment)
+    pubsub.publish("New Comment", { comment })
+
+    return comment
   },
 }
 
